@@ -1,0 +1,91 @@
+
+import java.util.Scanner;
+
+import java.util.Scanner;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean fortsätt = true;
+
+        // Produktlista
+        Map<String, Integer> produkter = new HashMap<>();
+        produkter.put("Mjölk", 20);
+        produkter.put("Ägg", 25);
+        produkter.put("Smör", 30);
+        produkter.put("Bröd", 15);
+
+        // Varukorg
+        Map<String, Integer> varukorg = new HashMap<>();
+
+        while (fortsätt) {
+            System.out.println("\nVälkommen till Matbutiken");
+            System.out.println("1. Visa produkter och priser");
+            System.out.println("2. Handla");
+            System.out.println("3. Avsluta");
+            System.out.print("Välj alternativ (1-3): ");
+
+            String val = scanner.nextLine();
+
+            switch (val) {
+                case "1":
+                    System.out.println("Här är våra produkter och priser:");
+                    for (String produkt : produkter.keySet()) {
+                        System.out.println(produkt + " = " + produkter.get(produkt) + "kr");
+                    }
+                    break;
+
+                case "2":
+                    System.out.println("Du har valt att handla. Skriv 'klar' när du är färdig.");
+                    while (true) {
+                        System.out.print("Produktnamn: ");
+                        String input = scanner.nextLine();
+
+                        if (input.equalsIgnoreCase("klar")) {
+                            break;
+                        }
+
+                        if (produkter.containsKey(input)) {
+                            varukorg.put(input, varukorg.getOrDefault(input, 0) + 1);
+                            System.out.println(input + " har lagts till i varukorgen.");
+                        } else {
+                            System.out.println("Produkten finns inte.");
+                        }
+                    }
+
+                    // Visa kvitto
+                    int total = 0;
+                    System.out.println("\nDin varukorg:");
+                    for (String produkt : varukorg.keySet()) {
+                        int antal = varukorg.get(produkt);
+                        int pris = produkter.get(produkt);
+                        System.out.println(produkt + " x" + antal + " = " + (antal * pris) + "kr");
+                        total += antal * pris;
+                    }
+                    System.out.println("Totalt att betala: " + total + "kr");
+                    break;
+
+                case "3":
+                    System.out.println("Tack för besöket! Hej då!");
+                    fortsätt = false;
+                    break;
+
+                default:
+                    System.out.println("Ogiltigt val. Försök igen.");
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+
+
+
+
+
+
+
